@@ -1,18 +1,11 @@
 package com.outercode.Cantina.EB.controllers.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class StandardError implements Serializable {
 
     @Serial
@@ -20,4 +13,28 @@ public class StandardError implements Serializable {
 
     private int statusCode;
     private Set<String> errors;
+
+    public StandardError() {
+    }
+
+    public StandardError(int statusCode, Set<String> errors) {
+        this.statusCode = statusCode;
+        this.errors = errors;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public Set<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Set<String> errors) {
+        this.errors = errors;
+    }
 }
