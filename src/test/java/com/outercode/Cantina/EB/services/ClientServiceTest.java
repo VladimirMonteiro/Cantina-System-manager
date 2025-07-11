@@ -12,10 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 
-import static com.outercode.Cantina.EB.utils.InitClientConstants.CLIENT;
+import static com.outercode.Cantina.EB.utils.InitClientConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -40,5 +41,23 @@ class ClientServiceTest {
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals("vladimir", result.getFirst().warName());
+    }
+
+    @Test
+    void CreateClient_WithValidData_ReturnSuccessMessage() {
+        when(clientRepository.save(any())).thenReturn(CLIENT);
+
+        Client result = clientService.create(CREATE_CLIENT_DTO);
+
+        assertNotNull(result);
+        assertEquals(result.getClass(), CLIENT.getClass());
+        assertEquals(result.getWarName(), CLIENT.getWarName());
+        assertEquals(result.getPhone(), CLIENT.getPhone());
+        assertEquals(result.getCompany(), CLIENT.getCompany());
+        assertEquals(result.getSoldierNumber(), CLIENT.getSoldierNumber());
+    }
+
+    @Test
+    void CreateClient_WithInvalidData_ReturnsThrowException() {
     }
 }
