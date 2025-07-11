@@ -3,6 +3,7 @@ package com.outercode.Cantina.EB.services;
 import com.outercode.Cantina.EB.dto.client.ResponseClientDTO;
 import com.outercode.Cantina.EB.entities.Client;
 import com.outercode.Cantina.EB.repositories.ClientRepository;
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,8 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.outercode.Cantina.EB.utils.InitClientConstants.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -90,5 +90,18 @@ class ClientServiceTest {
         assertThat(sut).isEmpty();
         verify(clientRepository).findById(1L);
         verify(clientRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void deleteClient_WithValidId_ThenReturnSuccessMessage() {
+        when(clientRepository.findById(anyLong())).thenReturn(Optional.of(CLIENT));
+        assertThatCode(()-> clientService.delete(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void deleteClient_WithInvalidId_ThrowsObjectNotFoundException() {
+        when(clientRepository.findById(anyLong())).thenReturn(Optional.of(CLIENT));
+        doThrow(new ObjectNotFoundException("Cliente não encontrado.")).when(clientRepository).deleteById(99L);
+        assertThatThrownBy(() -> clientService.delete(99L)).isInstanceOf(ObjectNotFoundException.class);
     }
 }
