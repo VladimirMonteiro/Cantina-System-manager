@@ -1,7 +1,9 @@
 package com.outercode.Cantina.EB.services;
 
 import com.outercode.Cantina.EB.dto.client.ResponseClientDTO;
+import com.outercode.Cantina.EB.dto.client.UpdateClientDTO;
 import com.outercode.Cantina.EB.entities.Client;
+import com.outercode.Cantina.EB.entities.enums.Company;
 import com.outercode.Cantina.EB.repositories.ClientRepository;
 import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -103,5 +105,26 @@ class ClientServiceTest {
         when(clientRepository.findById(anyLong())).thenReturn(Optional.of(CLIENT));
         doThrow(new ObjectNotFoundException("Cliente não encontrado.")).when(clientRepository).deleteById(99L);
         assertThatThrownBy(() -> clientService.delete(99L)).isInstanceOf(ObjectNotFoundException.class);
+    }
+
+    @Test
+    void updateClient_ThenReturnSuccessMessage() {
+        when(clientRepository.findById(anyLong())).thenReturn(Optional.of(CLIENT));
+        when(clientRepository.save(CLIENT)).thenReturn(CLIENT);
+
+        UpdateClientDTO updatedClient = new UpdateClientDTO(
+                "updated war name",
+                100,
+                "0000-0000",
+                Company.TWOCIA
+        );
+
+        Client response = clientService.update(anyLong(), updatedClient);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getWarName()).isEqualTo(updatedClient.warName());
+        assertThat(response.getSoldierNumber()).isEqualTo(updatedClient.soldierNumber());
+        assertThat(response.getPhone()).isEqualTo(updatedClient.phone());
+        assertThat(response.getCompany()).isEqualTo(updatedClient.company());
     }
 }
