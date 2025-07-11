@@ -17,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.List;
 
 import static com.outercode.Cantina.EB.utils.InitClientConstants.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -58,6 +59,10 @@ class ClientServiceTest {
     }
 
     @Test
-    void CreateClient_WithInvalidData_ReturnsThrowException() {
+    void CreateClient_WithInvalidData_ThrowsException() {
+        when(clientRepository.save(INVALID_CLIENT)).thenThrow(new IllegalArgumentException());
+
+        assertThatThrownBy(() -> clientService.create(INVALID_CREATE_CLIENT))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
