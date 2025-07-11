@@ -48,4 +48,10 @@ public class ClientController {
                 client.getWarName(), client.getSoldierNumber(), client.getPhone(), client.getCompany());
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseDTO> delete(@PathVariable("id") Long id) {
+        clientService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Cliente removido com sucesso."));
+    }
 }
