@@ -4,6 +4,7 @@ import com.outercode.Cantina.EB.config.ModelMapperConfig;
 import com.outercode.Cantina.EB.controllers.exceptions.ResponseDTO;
 import com.outercode.Cantina.EB.dto.client.CreateClientDTO;
 import com.outercode.Cantina.EB.dto.client.ResponseClientDTO;
+import com.outercode.Cantina.EB.dto.client.UpdateClientDTO;
 import com.outercode.Cantina.EB.entities.Client;
 import com.outercode.Cantina.EB.services.ClientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,5 +54,11 @@ public class ClientController {
     public ResponseEntity<ResponseDTO> delete(@PathVariable("id") Long id) {
         clientService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Cliente removido com sucesso."));
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<ResponseDTO> update(@PathVariable("id") Long id, UpdateClientDTO obj) {
+        clientService.update(id, obj);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Cliente atualizado com sucesso."));
     }
 }

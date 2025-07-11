@@ -2,6 +2,7 @@ package com.outercode.Cantina.EB.services;
 
 import com.outercode.Cantina.EB.dto.client.CreateClientDTO;
 import com.outercode.Cantina.EB.dto.client.ResponseClientDTO;
+import com.outercode.Cantina.EB.dto.client.UpdateClientDTO;
 import com.outercode.Cantina.EB.entities.Client;
 import com.outercode.Cantina.EB.repositories.ClientRepository;
 import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ClientService {
@@ -54,4 +56,27 @@ public class ClientService {
         this.findById(id);
         clientRepository.deleteById(id);
     }
+
+    public Client update(Long id, UpdateClientDTO obj) {
+        Client client = this.findById(id);
+
+        if (obj.warName() != null && !obj.warName().isBlank()) {
+            client.setWarName(obj.warName());
+        }
+
+        if (obj.company() != null) {
+            client.setCompany(obj.company());
+        }
+
+        if (obj.phone() != null && !obj.phone().isBlank()) {
+            client.setPhone(obj.phone());
+        }
+
+        if (obj.soldierNumber() != null) {
+            client.setSoldierNumber(obj.soldierNumber());
+        }
+
+        return clientRepository.save(client);
+    }
+
 }
