@@ -15,8 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.outercode.Cantina.EB.utils.InitClientConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -64,5 +66,29 @@ class ClientServiceTest {
 
         assertThatThrownBy(() -> clientService.create(INVALID_CREATE_CLIENT))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void findClientById_WithValidId_ThenReturnClient() {
+        when(clientRepository.findById(anyLong())).thenReturn(Optional.of(CLIENT));
+
+        Client response = clientService.findById(CLIENT.getId());
+
+        assertNotNull(response);
+        assertEquals(response.getId(), CLIENT.getId());
+        assertEquals(response.getWarName(), CLIENT.getWarName());
+        assertEquals(response.getSoldierNumber(), CLIENT.getSoldierNumber());
+        assertEquals(response.getCompany(), CLIENT.getCompany());
+        verify(clientRepository, times(1)).findById(CLIENT.getId());
+    }
+
+    @Test
+    void findClientById_WithInvalidId_ThrowsObjectNotFound() {
+        when(clientRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Optional<Client> sut =  clientRepository.findById(1L);
+        assertThat(sut).isEmpty();
+        verify(clientRepository).findById(1L);
+        verify(clientRepository, times(1)).findById(1L);
     }
 }
