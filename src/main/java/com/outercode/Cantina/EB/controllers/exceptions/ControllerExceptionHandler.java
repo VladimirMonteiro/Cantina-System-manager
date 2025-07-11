@@ -1,5 +1,6 @@
 package com.outercode.Cantina.EB.controllers.exceptions;
 
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,10 @@ public class ControllerExceptionHandler {
         StandardError response = new StandardError(HttpStatus.BAD_REQUEST.value(), messages);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<ResponseDTO> ObjectNotFoundException(ObjectNotFoundException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND.value(), "Cliente não encontrado."));
     }
 }
