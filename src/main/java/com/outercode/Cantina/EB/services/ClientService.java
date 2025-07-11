@@ -4,6 +4,7 @@ import com.outercode.Cantina.EB.dto.client.CreateClientDTO;
 import com.outercode.Cantina.EB.dto.client.ResponseClientDTO;
 import com.outercode.Cantina.EB.entities.Client;
 import com.outercode.Cantina.EB.repositories.ClientRepository;
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,5 +44,9 @@ public class ClientService {
         newClient.setCompany(obj.company());
 
         return clientRepository.save(newClient);
+    }
+
+    public Client findById(Long id) {
+        return clientRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado."));
     }
 }
