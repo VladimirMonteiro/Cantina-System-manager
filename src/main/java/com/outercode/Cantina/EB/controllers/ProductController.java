@@ -3,6 +3,7 @@ package com.outercode.Cantina.EB.controllers;
 import com.outercode.Cantina.EB.controllers.exceptions.ResponseDTO;
 import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
+import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,12 @@ public class ProductController {
         productService.create(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(HttpStatus.CREATED.value(),
                 "Produto cadastrado com sucesso."));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseProductDTO> findById(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+        ResponseProductDTO productDTO = new ResponseProductDTO(product.getId(), product.getName(), product.getPrice());
+        return ResponseEntity.status(HttpStatus.OK).body(productDTO);
     }
 }

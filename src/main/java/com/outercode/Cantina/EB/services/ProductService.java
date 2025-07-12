@@ -4,6 +4,7 @@ import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -36,5 +37,9 @@ public class ProductService {
         newProduct.setName(obj.name());
         newProduct.setPrice(obj.price());
         return productRepository.save(newProduct);
+    }
+
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Produto não encontrado."));
     }
 }
