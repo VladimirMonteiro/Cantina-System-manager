@@ -1,7 +1,6 @@
 package com.outercode.Cantina.EB.services;
 
 
-import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
@@ -16,9 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.outercode.Cantina.EB.utils.InitClientConstants.INVALID_CLIENT;
-import static com.outercode.Cantina.EB.utils.InitClientConstants.INVALID_CREATE_CLIENT;
 import static com.outercode.Cantina.EB.utils.InitProductConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -68,5 +66,29 @@ class ProductServiceTest {
 
         assertThatThrownBy(() -> productService.create(INVALID_CREATE_PRODUCT_DTO))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void  findProduct_WithValidId_ThenReturnProduct() {
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(PRODUCT));
+
+        Product result = productService.findById(PRODUCT.getId());
+
+        assertNotNull(result);
+        assertThat(result.getId()).isEqualTo(PRODUCT.getId());
+        assertThat(result.getName()).isEqualTo(PRODUCT.getName());
+        assertThat(result.getPrice()).isEqualTo(PRODUCT.getPrice());
+        verify(productRepository, times(1)).findById(PRODUCT.getId());
+        assertThat(result).isInstanceOf(Product.class);
+    }
+
+    @Test
+    void findProduct_WithInvalidId_ThrowsObjectNotFoundException() {
+        when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Optional<Product> sut =  productRepository.findById(1L);
+        assertThat(sut).isEmpty();
+        verify(productRepository).findById(1L);
+        verify(productRepository, times(1)).findById(1L);
     }
 }
