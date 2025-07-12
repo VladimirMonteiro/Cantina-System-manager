@@ -1,6 +1,8 @@
 package com.outercode.Cantina.EB.services;
 
+import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
+import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +28,13 @@ public class ProductService {
                 product.getName(),
                 product.getPrice()
         )).toList();
+    }
+
+    public Product create(CreateProductDTO obj) {
+        Product newProduct = new Product();
+
+        newProduct.setName(obj.name());
+        newProduct.setPrice(obj.price());
+        return productRepository.save(newProduct);
     }
 }
