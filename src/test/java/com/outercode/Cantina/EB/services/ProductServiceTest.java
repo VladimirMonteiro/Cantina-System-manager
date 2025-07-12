@@ -1,6 +1,7 @@
 package com.outercode.Cantina.EB.services;
 
 
+import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
@@ -16,9 +17,12 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.outercode.Cantina.EB.utils.InitProductConstants.PRODUCT;
+import static com.outercode.Cantina.EB.utils.InitClientConstants.INVALID_CLIENT;
+import static com.outercode.Cantina.EB.utils.InitClientConstants.INVALID_CREATE_CLIENT;
+import static com.outercode.Cantina.EB.utils.InitProductConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -43,5 +47,26 @@ class ProductServiceTest {
         assertEquals("Pastel", result.getFirst().name());
         assertEquals(4.50,result.getFirst().price());
         assertEquals(1, result.getFirst().id());
+    }
+
+    @Test
+    void createProduct_WithValidData_ThenReturnSuccessMessage() {
+        when(productRepository.save(any())).thenReturn(PRODUCT);
+
+        Product result = productService.create(CREATE_PRODUCT_DTO);
+
+        assertNotNull(result);
+        assertThat(result.getName()).isEqualTo(PRODUCT.getName());
+        assertThat(result.getPrice()).isEqualTo(PRODUCT.getPrice());
+        assertThat(result).isInstanceOf(Product.class);
+    }
+
+    @Test
+    void createProduct_WithInvalidData_ReturnsThrowsExeception() {
+        when(productRepository.save(INVALID_PRODUCT)).thenThrow(new IllegalArgumentException());
+
+
+        assertThatThrownBy(() -> productService.create(INVALID_CREATE_PRODUCT_DTO))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
