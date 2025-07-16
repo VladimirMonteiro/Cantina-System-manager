@@ -2,8 +2,11 @@ package com.outercode.Cantina.EB.services;
 
 
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
+
+
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+import static com.outercode.Cantina.EB.utils.InitClientConstants.CLIENT;
 import static com.outercode.Cantina.EB.utils.InitProductConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -90,5 +94,20 @@ class ProductServiceTest {
         assertThat(sut).isEmpty();
         verify(productRepository).findById(1L);
         verify(productRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void deleteProduct_WithValidId_ThenReturnSuccessMessage() {
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(PRODUCT));
+        assertThatCode(()-> productService.delete(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void deleteProduct_WithInvalidId_ThrowsObjectNotFoundException() {
+        when(productRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> productService.delete(99L))
+                .isInstanceOf(ObjectNotFoundException.class)
+                .hasMessage("Produto não encontrado.");
     }
 }
