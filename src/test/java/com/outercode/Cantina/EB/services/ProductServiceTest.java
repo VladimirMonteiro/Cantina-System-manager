@@ -4,6 +4,7 @@ package com.outercode.Cantina.EB.services;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
 
 
+import com.outercode.Cantina.EB.dto.product.UpdateProductDTO;
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
 import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
@@ -109,5 +110,24 @@ class ProductServiceTest {
         assertThatThrownBy(() -> productService.delete(99L))
                 .isInstanceOf(ObjectNotFoundException.class)
                 .hasMessage("Produto não encontrado.");
+    }
+
+    @Test
+    void updateProduct_withValidData_ThenReturnSuccessMessage() {
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(PRODUCT));
+
+        UpdateProductDTO updateProductDTO = new UpdateProductDTO("NameUpdate", 5.00);
+        Product updatedProduct = new Product();
+        updatedProduct.setName(updatedProduct.getName());
+        updatedProduct.setPrice(updatedProduct.getPrice());
+
+        when(productRepository.save(any())).thenReturn(updatedProduct);
+
+        Product result = productService.update(1L, updateProductDTO);
+
+        assertNotNull(result);
+        assertThat(result.getName()).isEqualTo(updatedProduct.getName());
+        assertThat(result.getPrice()).isEqualTo(updatedProduct.getPrice());
+        assertThat(result).isInstanceOf(Product.class);
     }
 }
