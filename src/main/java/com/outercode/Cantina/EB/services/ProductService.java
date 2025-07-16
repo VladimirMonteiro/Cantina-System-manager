@@ -42,4 +42,9 @@ public class ProductService {
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Produto não encontrado."));
     }
+
+    public void delete(Long id) {
+        Product product = this.findById(id);
+        productRepository.deleteById(product.getId());
+    }
 }

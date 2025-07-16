@@ -41,4 +41,10 @@ public class ProductController {
         ResponseProductDTO productDTO = new ResponseProductDTO(product.getId(), product.getName(), product.getPrice());
         return ResponseEntity.status(HttpStatus.OK).body(productDTO);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseDTO> delete(@PathVariable("id") Long id) {
+        productService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Produto removido com sucesso."));
+    }
 }
