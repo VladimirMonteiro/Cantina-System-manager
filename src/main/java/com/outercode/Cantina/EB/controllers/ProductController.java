@@ -3,6 +3,7 @@ package com.outercode.Cantina.EB.controllers;
 import com.outercode.Cantina.EB.controllers.exceptions.ResponseDTO;
 import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
+import com.outercode.Cantina.EB.dto.product.UpdateProductDTO;
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.services.ProductService;
 import jakarta.validation.Valid;
@@ -46,5 +47,11 @@ public class ProductController {
     public ResponseEntity<ResponseDTO> delete(@PathVariable("id") Long id) {
         productService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Produto removido com sucesso."));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResponseDTO> update(@PathVariable("id") Long id, @RequestBody UpdateProductDTO obj) {
+        productService.update(id, obj);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Produto atualizado com sucesso."));
     }
 }

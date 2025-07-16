@@ -2,6 +2,7 @@ package com.outercode.Cantina.EB.services;
 
 import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
+import com.outercode.Cantina.EB.dto.product.UpdateProductDTO;
 import com.outercode.Cantina.EB.entities.Product;
 import com.outercode.Cantina.EB.repositories.ProductRepository;
 import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
@@ -46,5 +47,19 @@ public class ProductService {
     public void delete(Long id) {
         Product product = this.findById(id);
         productRepository.deleteById(product.getId());
+    }
+
+    public Product update(Long id, UpdateProductDTO obj) {
+        Product updatedProduct = this.findById(id);
+
+        if (obj.name() != null && !obj.name().isBlank()) {
+            updatedProduct.setName(obj.name());
+        }
+
+        if (obj.price() != null) {
+            updatedProduct.setPrice(obj.price());
+        }
+
+        return productRepository.save(updatedProduct);
     }
 }
