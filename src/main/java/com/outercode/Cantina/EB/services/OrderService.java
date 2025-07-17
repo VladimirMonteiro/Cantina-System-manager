@@ -1,7 +1,10 @@
 package com.outercode.Cantina.EB.services;
 
+import com.outercode.Cantina.EB.dto.order.CreateOrderDTO;
 import com.outercode.Cantina.EB.dto.order.ResponseOrderDTO;
+import com.outercode.Cantina.EB.entities.Order;
 import com.outercode.Cantina.EB.repositories.OrderRepository;
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,5 +32,9 @@ public class OrderService {
                         order.getClient(),
                         order.getItems()
                 )).toList();
+    }
+
+    public Order findById(Long id) {
+       return orderRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Pedido não encontrado"));
     }
 }
