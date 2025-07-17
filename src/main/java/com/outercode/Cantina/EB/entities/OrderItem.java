@@ -7,19 +7,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")
-@NoArgsConstructor
-@EqualsAndHashCode
-@Getter
-@Setter
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +25,9 @@ public class OrderItem implements Serializable {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    public OrderItem() {
+    }
 
     public OrderItem(Order order, Product product, Double price, Integer quantity) {
         id.setOrder(order);
@@ -61,5 +57,42 @@ public class OrderItem implements Serializable {
 
     public Double getSubTotal(){
         return price * quantity;
+    }
+
+    public OrderItemPK getId() {
+        return id;
+    }
+
+    public void setId(OrderItemPK id) {
+        this.id = id;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return Objects.equals(id, orderItem.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
