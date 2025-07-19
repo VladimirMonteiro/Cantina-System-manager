@@ -2,7 +2,6 @@ package com.outercode.Cantina.EB.utils;
 
 import com.outercode.Cantina.EB.dto.product.CreateProductDTO;
 import com.outercode.Cantina.EB.dto.product.ResponseProductDTO;
-import com.outercode.Cantina.EB.entities.Client;
 import com.outercode.Cantina.EB.entities.Product;
 
 public class InitProductConstants {

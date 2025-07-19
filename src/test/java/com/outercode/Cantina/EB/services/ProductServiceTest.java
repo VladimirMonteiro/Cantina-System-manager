@@ -21,7 +21,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-import static com.outercode.Cantina.EB.utils.InitClientConstants.CLIENT;
+
 import static com.outercode.Cantina.EB.utils.InitProductConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
