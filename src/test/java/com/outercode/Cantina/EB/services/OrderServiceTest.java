@@ -60,7 +60,6 @@ class OrderServiceTest {
         assertEquals(1, result.size());
         assertEquals(result.getFirst().orderStatus(),ORDER.getOrderStatus());
         assertEquals(result.getFirst().totalPrice(), ORDER.getTotalPrice());
-        assertEquals(result.getFirst().items(), ORDER.getItems());
         assertEquals(result.getFirst().id(), ORDER.getId());
         assertEquals(result.getFirst().client(), ORDER.getClient());
     }

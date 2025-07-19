@@ -36,8 +36,7 @@ public class OrderController {
                  order.getDate(),
                  order.getTotalPrice(),
                  order.getOrderStatus(),
-                 order.getClient(),
-                 order.getItems());
+                 order.getClient());
         return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
     }
 

@@ -44,8 +44,7 @@ public class OrderService {
                         order.getDate(),
                         order.getTotalPrice(),
                         order.getOrderStatus(),
-                        order.getClient(),
-                        order.getItems()
+                        order.getClient()
                 )).toList();
     }
 
