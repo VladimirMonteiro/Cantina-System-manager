@@ -95,4 +95,9 @@ public class OrderService {
         order.setTotalPrice(totalOrderPrice);
         return orderRepository.save(order);
     }
+
+    public void delete(Long id) {
+        this.findById(id);
+        orderRepository.deleteById(id);
+    }
 }

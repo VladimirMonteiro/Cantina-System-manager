@@ -45,4 +45,10 @@ public class OrderController {
         orderService.create(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(HttpStatus.CREATED.value(), "Pedido cadastrado com sucesso."));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseDTO> delete(@PathVariable("id") Long id) {
+        orderService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK.value(), "Pedido excluido com sucesso."));
+    }
 }
