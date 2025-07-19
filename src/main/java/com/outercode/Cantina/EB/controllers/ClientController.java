@@ -46,7 +46,7 @@ public class ClientController {
     public ResponseEntity<ResponseClientDTO> findById(@PathVariable("id") Long id) {
         Client client = clientService.findById(id);
         ResponseClientDTO dto = new ResponseClientDTO(client.getId(),
-                client.getWarName(), client.getSoldierNumber(), client.getPhone(), client.getCompany());
+                client.getWarName(), client.getSoldierNumber(), client.getGrad(),client.getPhone(), client.getCompany());
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 

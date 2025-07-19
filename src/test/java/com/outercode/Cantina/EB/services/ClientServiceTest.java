@@ -60,6 +60,7 @@ class ClientServiceTest {
         assertEquals(result.getPhone(), CLIENT.getPhone());
         assertEquals(result.getCompany(), CLIENT.getCompany());
         assertEquals(result.getSoldierNumber(), CLIENT.getSoldierNumber());
+        assertEquals(result.getGrad(), CLIENT.getGrad());
     }
 
     @Test
@@ -80,6 +81,7 @@ class ClientServiceTest {
         assertEquals(response.getId(), CLIENT.getId());
         assertEquals(response.getWarName(), CLIENT.getWarName());
         assertEquals(response.getSoldierNumber(), CLIENT.getSoldierNumber());
+        assertEquals(response.getGrad(), CLIENT.getGrad());
         assertEquals(response.getCompany(), CLIENT.getCompany());
         verify(clientRepository, times(1)).findById(CLIENT.getId());
     }
@@ -115,6 +117,7 @@ class ClientServiceTest {
         UpdateClientDTO updatedClient = new UpdateClientDTO(
                 "updated war name",
                 100,
+                "SD",
                 "0000-0000",
                 Company.TWOCIA
         );
@@ -124,6 +127,7 @@ class ClientServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getWarName()).isEqualTo(updatedClient.warName());
         assertThat(response.getSoldierNumber()).isEqualTo(updatedClient.soldierNumber());
+        assertThat(response.getGrad()).isEqualTo(updatedClient.grad());
         assertThat(response.getPhone()).isEqualTo(updatedClient.phone());
         assertThat(response.getCompany()).isEqualTo(updatedClient.company());
     }

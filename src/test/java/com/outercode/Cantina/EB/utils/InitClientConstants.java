@@ -7,9 +7,9 @@ import com.outercode.Cantina.EB.entities.enums.Company;
 
 public class InitClientConstants {
 
-    public static final ResponseClientDTO CLIENT_DTO = new ResponseClientDTO(1L, "vladimir", null, "51995005000", Company.TWOCIA);
-    public static final Client CLIENT = new Client(1L, "vladimir", null, "51995005000", Company.TWOCIA);
-    public static final Client INVALID_CLIENT = new Client(null, "", null, "", Company.TWOCIA);
-    public static final CreateClientDTO CREATE_CLIENT_DTO = new CreateClientDTO("vladimir", null, "51995005000", Company.TWOCIA);
-    public static final CreateClientDTO INVALID_CREATE_CLIENT = new CreateClientDTO("", null, "", Company.TWOCIA);
+    public static final ResponseClientDTO CLIENT_DTO = new ResponseClientDTO(1L, "vladimir", null, "CB","51995005000", Company.TWOCIA);
+    public static final Client CLIENT = new Client(1L, "vladimir", null,"CB" ,"51995005000", Company.TWOCIA);
+    public static final Client INVALID_CLIENT = new Client(null, "", null, "", "", Company.TWOCIA);
+    public static final CreateClientDTO CREATE_CLIENT_DTO = new CreateClientDTO("vladimir", null,"CB" ,"51995005000", Company.TWOCIA);
+    public static final CreateClientDTO INVALID_CREATE_CLIENT = new CreateClientDTO("", null, "", "",Company.TWOCIA);
 }

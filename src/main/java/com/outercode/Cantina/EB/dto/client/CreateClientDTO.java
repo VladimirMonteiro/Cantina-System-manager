@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 public record CreateClientDTO(
         @NotBlank(message = "O nome de guerra é obrigatório!") String warName,
         Integer soldierNumber,
+        @NotBlank(message = "A graduação é obrigatória!")
+        String grad,
         @NotBlank(message = "O telefone é obrigatório!") String phone,
         @NotNull(message = "A companhia é obrigatória!") Company company) {
 }

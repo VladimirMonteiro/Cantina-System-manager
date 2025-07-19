@@ -31,6 +31,7 @@ public class ClientService {
                         client.getId(),
                         client.getWarName(),
                         client.getSoldierNumber(),
+                        client.getGrad(),
                         client.getPhone(),
                         client.getCompany()
                 ))
@@ -42,6 +43,7 @@ public class ClientService {
 
         newClient.setWarName(obj.warName());
         newClient.setSoldierNumber(obj.soldierNumber());
+        newClient.setGrad(obj.grad());
         newClient.setPhone(obj.phone());
         newClient.setCompany(obj.company());
 
@@ -74,6 +76,10 @@ public class ClientService {
 
         if (obj.soldierNumber() != null) {
             client.setSoldierNumber(obj.soldierNumber());
+        }
+
+        if (obj.grad() != null && !obj.grad().isBlank())  {
+            client.setGrad(obj.grad());
         }
 
         return clientRepository.save(client);

@@ -22,6 +22,9 @@ public class Client implements Serializable {
     private Integer soldierNumber;
 
     @Column(nullable = false)
+    private String grad;
+
+    @Column(nullable = false)
     private String phone;
 
     @Enumerated(EnumType.STRING)
@@ -33,10 +36,11 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(Long id, String warName, Integer soldierNumber, String phone, Company company) {
+    public Client(Long id, String warName, Integer soldierNumber, String grad, String phone, Company company) {
         this.id = id;
         this.warName = warName;
         this.soldierNumber = soldierNumber;
+        this.grad = grad;
         this.phone = phone;
         this.company = company;
     }
@@ -63,6 +67,14 @@ public class Client implements Serializable {
 
     public void setSoldierNumber(Integer soldierNumber) {
         this.soldierNumber = soldierNumber;
+    }
+
+    public String getGrad() {
+        return grad;
+    }
+
+    public void setGrad(String grad) {
+        this.grad = grad;
     }
 
     public String getPhone() {
