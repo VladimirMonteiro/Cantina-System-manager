@@ -5,6 +5,7 @@ import com.outercode.Cantina.EB.entities.Order;
 import com.outercode.Cantina.EB.entities.OrderItem;
 import com.outercode.Cantina.EB.repositories.OrderItemRepository;
 import com.outercode.Cantina.EB.repositories.OrderRepository;
+import com.outercode.Cantina.EB.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -109,5 +110,20 @@ class OrderServiceTest {
        verify(productService, times(1)).findById(anyLong());
        verify(orderItemRepository, times(1)).save(any());
        verify(orderRepository, times(1)).save(ORDER);
+    }
+
+    @Test
+    void deleteOrder_WithValidId_thenReturnSuccessMessage() {
+        when(orderRepository.findById(anyLong())).thenReturn(Optional.of(ORDER));
+        assertThatCode(()-> orderService.delete(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void deleteOrder_WithInvalidId_thenReturnObjectNotFoundException() {
+        when(orderRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> orderService.delete(99L))
+                .isInstanceOf(ObjectNotFoundException.class)
+                .hasMessage("Pedido não encontrado");
     }
 }
