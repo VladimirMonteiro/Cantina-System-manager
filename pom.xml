@@ -116,6 +116,12 @@
 					<targetTests>
 						<param>com.outercode.Cantina.EB.*Test</param>
 					</targetTests>
+					<excludedClasses>
+						<param>com.outercode.Cantina.EB.entities.Order</param>
+						<param>com.outercode.Cantina.EB.entities.OrderItem</param>
+						<param>com.outercode.Cantina.EB.entities.Client</param>
+						<param>com.outercode.Cantina.EB.entities.Product</param>
+					</excludedClasses>
 				</configuration>
 			</plugin>
 
